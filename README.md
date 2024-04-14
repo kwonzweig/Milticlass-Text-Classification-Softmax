@@ -46,6 +46,8 @@ test size for data split: 20%
 
 ### TF-IDF model
 
+![TF-IDF Model Accuracy Plot](https://raw.githubusercontent.com/kwonzweig/Milticlass-Text-Classification-Softmax/master/TF-IDF%20with%20overfit%20prevention_accuracy_plot.png)
+
 ```python
 model = Sequential(
     [
@@ -66,6 +68,9 @@ Time taken to train the model: 57.70 seconds
 ```
 
 ### Attention model with LSTM
+
+![Attention Model with LSTM Accuracy Plot](https://raw.githubusercontent.com/kwonzweig/Milticlass-Text-Classification-Softmax/master/Attention%20Model%20with%20LSTM_accuracy_plot.png)
+
 
 ```python
 model = Sequential([
