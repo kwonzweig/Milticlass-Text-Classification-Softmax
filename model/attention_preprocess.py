@@ -2,7 +2,9 @@ import nltk
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 from keras.src.legacy.preprocessing.text import Tokenizer
-from nltk.corpus import reuters
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 
@@ -12,17 +14,25 @@ nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("wordnet")
 
+# Set up stopwords and the lemmatizer
+stop_words = set(stopwords.words("english"))
+lemmatizer = WordNetLemmatizer()
 
-def load_data():
-    documents = []
-    labels = []
-    for file_id in reuters.fileids():
-        documents.append(reuters.raw(file_id))
-        labels.append(reuters.categories(file_id)[0])
-    return documents, labels
+
+def clean_text(text):
+    # Tokenize text
+    words = word_tokenize(text)
+    # Convert to lower case and remove punctuation
+    words = [word.lower() for word in words if word.isalnum()]
+    # Remove stopwords and lemmatize
+    words = [lemmatizer.lemmatize(word) for word in words if word not in stop_words]
+    return " ".join(words)
 
 
 def preprocess_data(documents, labels, num_features=1000, max_length=200):
+    # Clean the documents
+    documents = [clean_text(doc) for doc in documents]
+
     # Initialize and fit the one-hot encoder on labels
     one_hot_encoder = OneHotEncoder(sparse_output=False)
     one_hot_encoder.fit(np.array(labels).reshape(-1, 1))

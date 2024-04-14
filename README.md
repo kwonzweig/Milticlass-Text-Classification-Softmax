@@ -1,7 +1,17 @@
 
 # Reuters Text Classification
 
-This project uses the Reuters Corpus dataset from the NLTK library to train a deep learning model for text classification. It utilizes TensorFlow to build and train a model that can classify text documents into various categories based on their content. The project is structured into four main scripts: `preprocess.py`, `training.py`, `predict.py`, and `streamlit_main.py`, each handling different aspects of the machine learning pipeline.
+This project uses the Reuters Corpus dataset from the NLTK library to train a deep learning model for text classification. It utilizes TensorFlow to build and train a model that can classify text documents into various categories based on their content. 
+
+## Reuters Corpus Dataset
+Reuters Corpus is a collection of news documents with categories assigned to each document.
+I took first label of each document as the target label, making it a suitable dataset for softmax output layer.
+
+```
+number of documents: 10788
+number of categories: 90
+test size for data split: 20%
+```
 
 ## Model Development
 
@@ -19,7 +29,7 @@ This project uses the Reuters Corpus dataset from the NLTK library to train a de
 - **Dropout Layer**: Regularizes the model by randomly setting a fraction of input units to zero during training.
 - **BatchNormalization**: Normalizes the activations of the previous layer at each batch, improving the stability and speed of training.
 - **Output Layer with Softmax Activation**: Produces probabilities across the output classes for classification.
-
+- **Why L2 Reg over L1 Reg**: L2 regularization is more effective in preventing overfitting by penalizing large weights more smoothly, whereas L1 regularization tends to produce sparse weights (many zeros).
 
 **Improvement**: Experiment with different architectures like LSTM, GRU, or Transformer models to capture the sequential nature of text data more effectively.
 
@@ -35,6 +45,46 @@ This project uses the Reuters Corpus dataset from the NLTK library to train a de
 ## Training Result
 
 ### TF-IDF model
+
+```python
+model = Sequential(
+    [
+        Dense(512, activation="relu", kernel_regularizer=l2(0.01)), # Dense layer with L2 regularization
+        Dropout(0.5), # Dropout for regularization
+        Dense(256, activation="relu", kernel_regularizer=l2(0.01)), # Dense layer with L2 regularization
+        Dropout(0.5), # Dropout for regularization
+        Dense(label_size, activation="softmax"), # Output layer with softmax activation
+    ]
+)
 ```
 
 ```
+TF-IDF
+Best training accuracy: 0.67
+Best validation accuracy: 0.70
+Time taken to train the model: 57.70 seconds
+```
+
+### Attention model with LSTM
+
+```python
+model = Sequential([
+    Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=input_length),
+    LSTM(256, return_sequences=True),  # LSTM layer with return_sequences=True for attention
+    Attention(),  # Custom attention layer
+    Dense(512, activation="relu", kernel_regularizer="l2"),  # Dense layer with L2 regularization
+    Dropout(0.5),  # Dropout for regularization
+    Dense(label_size, activation="softmax"), # Output layer with softmax activation
+])
+```
+
+```
+Attention Model with LSTM
+Best training accuracy: 0.93
+Best validation accuracy: 0.84
+Time taken to train the model: 740.75 seconds
+```
+
+### Improvement
+- Try Cross Validation to get a better estimate of the model's performance by training and evaluating the model on different subsets of the data.
+- Hyperparameter tuning to find the best combination of hyperparameters for the model.

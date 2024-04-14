@@ -1,7 +1,6 @@
 import nltk
 import numpy as np
 
-from nltk.corpus import reuters
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
@@ -11,28 +10,6 @@ nltk.download("reuters")
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("wordnet")
-
-
-def load_data():
-    """
-    Loads and preprocesses the Reuters dataset. Cleans the text and extracts categories as labels.
-
-    Returns:
-        tuple: A tuple containing two lists - the cleaned documents and their corresponding labels.
-    """
-    documents = []
-    labels = []
-
-    # Iterate over all Reuters file IDs
-    for file_id in reuters.fileids():
-        documents.append(reuters.raw(file_id))
-        labels.append(reuters.categories(file_id)[0])  # Taking the first category
-
-    # Print the number of documents and unique labels
-    print(f"Number of documents: {len(documents)}")
-    print(f"Number of unique labels: {len(set(labels))}")
-
-    return documents, labels
 
 
 def split_dataset(X, y, test_size=0.2, random_state=42):
