@@ -46,8 +46,6 @@ test size for data split: 20%
 
 ### TF-IDF model
 
-![TF-IDF Model Accuracy Plot](https://raw.githubusercontent.com/kwonzweig/Milticlass-Text-Classification-Softmax/master/TF-IDF%20with%20overfit%20prevention_accuracy_plot.png)
-
 ```python
 model = Sequential(
     [
@@ -69,8 +67,6 @@ Time taken to train the model: 57.70 seconds
 
 ### Attention model with LSTM
 
-![Attention Model with LSTM Accuracy Plot](https://raw.githubusercontent.com/kwonzweig/Milticlass-Text-Classification-Softmax/master/Attention%20Model%20with%20LSTM_accuracy_plot.png)
-
 
 ```python
 model = Sequential([
@@ -89,6 +85,12 @@ Best training accuracy: 0.93
 Best validation accuracy: 0.84
 Time taken to train the model: 740.75 seconds
 ```
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kwonzweig/Milticlass-Text-Classification-Softmax/master/TF-IDF%20with%20overfit%20prevention_accuracy_plot.png" alt="Description of first image" width="45%"/>
+  <img src="https://raw.githubusercontent.com/kwonzweig/Milticlass-Text-Classification-Softmax/master/Attention%20Model%20with%20LSTM_accuracy_plot.png" alt="Description of second image" width="45%"/>
+</p>
+
 
 ### Improvement
 - Try Cross Validation to get a better estimate of the model's performance by training and evaluating the model on different subsets of the data.
