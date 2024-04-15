@@ -27,7 +27,6 @@ test size for data split: 20%
 
 - **ReLU with L2 regularization**: Activation function that introduces non-linearity and helps the model learn complex patterns. L2 regularization helps prevent overfitting by penalizing large weights.
 - **Dropout Layer**: Regularizes the model by randomly setting a fraction of input units to zero during training.
-- **BatchNormalization**: Normalizes the activations of the previous layer at each batch, improving the stability and speed of training.
 - **Output Layer with Softmax Activation**: Produces probabilities across the output classes for classification.
 - **Why L2 Reg over L1 Reg**: L2 regularization is more effective in preventing overfitting by penalizing large weights more smoothly, whereas L1 regularization tends to produce sparse weights (many zeros).
 
